@@ -1,0 +1,25 @@
+# Compilación y Binarios
+/build/
+*.bin
+*.elf
+*.hex
+*.map
+*.o
+*.d
+*.su
+*.list
+
+# LSP & Herramientas de Desarrollo (Neovim/Clangd/Bear)
+compile_commands.json
+.clangd
+.cache/
+
+# Metadatos de IDEs (STM32CubeIDE/Eclipse)
+.settings/
+.project
+.cproject
+.mxproject
+
+# Archivos del Sistema
+.DS_Store
+Thumbs.db
