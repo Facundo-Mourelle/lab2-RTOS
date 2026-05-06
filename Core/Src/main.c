@@ -44,9 +44,6 @@ typedef struct {
 #define LED3 GPIO_PIN_14
 #define LED4 GPIO_PIN_15
 #define LED_PORT GPIOD
-
-#define BTN_PIN GPIO_PIN_0
-#define BTN_PORT GPIOA
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -58,7 +55,7 @@ typedef struct {
 
 /* USER CODE BEGIN PV */
 QueueHandle_t xQueueLeds;
-GPIO_TypeDef *puertos[4] = {LED1, LED2, LED3, LED4};
+uint16_t pines[4] = {LED1, LED2, LED3, LED4};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -111,7 +108,6 @@ void vMainTask(void *pvParameters) {
 
 void vSideTask(void *pvParameters) {
   led_message_t msg;
-  uint16_t pines[4] = {LED0_Pin, LED1_Pin, LED2_Pin, LED3_Pin};
 
   for (;;) {
     // bloquear hasta recibir un mensaje
@@ -119,7 +115,7 @@ void vSideTask(void *pvParameters) {
       if (msg.led_id < 4) {
         GPIO_PinState estado =
             (msg.command == ENCENDER) ? GPIO_PIN_SET : GPIO_PIN_RESET;
-        HAL_GPIO_WritePin(puertos[msg.led_id], pines[msg.led_id], estado);
+        HAL_GPIO_WritePin(LED_PORT, pines[msg.led_id], estado);
       }
     }
   }
