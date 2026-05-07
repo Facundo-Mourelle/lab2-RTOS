@@ -128,13 +128,13 @@ void vProcessTask(void *pvParameters) {
       xQueueReceive(Cola_Modo, &current_mode, 0);
     } else if (xActivatedMember == NULL) {
       // El timeout expiró => avanzar el frame de la secuencia LED
-      vSetLeds(led_state);
       if (current_mode == 'D') {
-        led_state = (led_state >> 1) | ((led_state & 0x01) << 3);
+        led_state = (led_state << 1) | ((led_state & 0x08) << 3);
       } else {
-        led_state = (led_state << 1) | ((led_state & 0x08) >> 3);
+        led_state = (led_state >> 1) | ((led_state & 0x01) >> 3);
       }
     }
+    vSetLeds(led_state);
   }
 }
 /* USER CODE END 0 */
